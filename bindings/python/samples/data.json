@@ -1,0 +1,10 @@
+{'data' = [{'end': datetime.datetime(2022, 10, 18, 23, 0, tzinfo=<UTC>),
+'start': datetime.datetime(2022, 10, 18, 22, 0, tzinfo=<UTC>),
+'value': 1},
+{'end': datetime.datetime(2022, 10, 19, 0, 0, tzinfo=<UTC>),
+'start': datetime.datetime(2022, 10, 18, 23, 0, tzinfo=<UTC>),
+'value': 2},
+{'end': datetime.datetime(2022, 10, 19, 1, 0, tzinfo=<UTC>),
+'start': datetime.datetime(2022, 10, 19, 0, 0, tzinfo=<UTC>),
+'value': 3}]
+}

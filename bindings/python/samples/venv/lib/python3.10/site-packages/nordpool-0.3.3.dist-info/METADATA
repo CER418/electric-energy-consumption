@@ -1,0 +1,12 @@
+Metadata-Version: 2.1
+Name: nordpool
+Version: 0.3.3
+Summary: Python library for fetching Nord Pool spot prices.
+Home-page: https://github.com/kipe/nordpool
+Author: Kimmo Huoman
+Author-email: kipenroskaposti@gmail.com
+License-File: LICENSE
+Requires-Dist: python-dateutil (>=2.6.1)
+Requires-Dist: pytz (>=2017.2)
+Requires-Dist: requests (>=2.18.4)
+
