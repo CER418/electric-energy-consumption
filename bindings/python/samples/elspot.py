@@ -5,6 +5,7 @@ import time
 import datetime
 from .location import location
 
+# Attempts to find the current location depending on IP, if not default to Kristiandsand.
 try:
     location = location()
 except Exception or ValueError:
@@ -14,10 +15,12 @@ except Exception or ValueError:
 spot_price = elspot.Prices()
 data = spot_price.hourly(end_date=datetime.date.today(), areas=[location])
 
+# Lowest and highest prices in the selected area throughout the current day.
 min_price = data['areas'][location]['Min']
 max_price = data['areas'][location]['Max']
 
 
+# Iterates through each hour in the fetched data, if it is equal to the current hour return the price.
 def current_value():
     for _ in data['areas'][location]['values']:
         if _['start'].hour == datetime.datetime.now(_['start'].tzinfo).hour:
@@ -27,8 +30,9 @@ def current_value():
 current_price = current_value()
 
 
+# Sets up the five categories of price by dividing the result of minimum and maximum by 5.
+# Then lists these values.
 def list_of_values(min_value, max_value):
-    """Create a list of five values between current_priceand y"""
     step = (min_value - max_value) / 5
     return list(range(round(min_value), round(max_value), abs(round(step))))
 
@@ -40,8 +44,8 @@ class Matrix(SampleBase):
     def __init__(self, *args, **kwargs):
         super(Matrix, self).__init__(*args, **kwargs)
 
+# Fills the LED board with colors depending on if the current price is between two dividers, defined earlier.
     def run(self):
-        """Main function to control the LED panel"""
         while True:
             if num is None:
                 self.matrix.Clear()
