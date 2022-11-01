@@ -3,17 +3,23 @@ from nordpool import elspot
 import schedule
 import time
 import datetime
+from .location import location
+
+try:
+    location = location()
+except Exception or ValueError:
+    location = "Kr.sand"
 
 # Instance of Prices class for fetching Nord Pool elspot prices.
 spot_price = elspot.Prices()
-data = spot_price.hourly(end_date=datetime.date.today(), areas=['Kr.sand'])
+data = spot_price.hourly(end_date=datetime.date.today(), areas=[location])
 
-min_price = data['areas']['Kr.sand']['Min']
-max_price = data['areas']['Kr.sand']['Max']
+min_price = data['areas'][location]['Min']
+max_price = data['areas'][location]['Max']
 
 
 def current_value():
-    for _ in data['areas']['Kr.sand']['values']:
+    for _ in data['areas'][location]['values']:
         if _['start'].hour == datetime.datetime.now(_['start'].tzinfo).hour:
             return _['value']
 
@@ -23,8 +29,8 @@ current_price = current_value()
 
 def list_of_values(min_value, max_value):
     """Create a list of five values between current_priceand y"""
-    step = (max_value - min_value) / 5
-    return list(range(min_value, max_value, abs(step)))
+    step = (min_value - max_value) / 5
+    return list(range(round(min_value), round(max_value), abs(round(step))))
 
 
 num = list_of_values(min_value=min_price, max_value=max_price)
@@ -61,8 +67,10 @@ def scheduled_task():
 
 if __name__ == "__main__":
     # Nord Pool publish data every day at 13:00 UTC
-    schedule.every().hour().do(scheduled_task())
-
+    print(current_price)
+    print(num)
+    scheduled_task()
+    schedule.every().hour.do(scheduled_task)
     while True:
         schedule.run_pending()
         time.sleep(1)

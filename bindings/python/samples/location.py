@@ -15,6 +15,11 @@ def get_location():
     return location_data.get("city").lower()
 
 
-city_from_api = get_location().get("city").lower()
+city_from_api = get_location()
 
-print(city_from_api)
+
+def format_city(city):
+    cities = {"oslo": "oslo", "kristiansand": "kr.sand", "bergen": "bergen", "trondheim": "tr.heim", "tromsø": "tromsø",
+              "molde": "molde"}
+    return cities.get(city)
+
