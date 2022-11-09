@@ -7,16 +7,16 @@ def get_ip():
 
 
 # Gets the location data from the IP fetched.
-def get_location():
-    ip_address = get_ip()
-    response = requests.get(f'https://ipapi.co/{ip_address}/json/').json()
-    location_data = {
-        "city": response.get("city")
-    }
-    return location_data.get("city").lower()
+def get_location(ip_address):
+    response = requests.get(f'https://ipapi.co/{ip_address}')
+    try:
+        location_data = {
+            "city": response.get("city")
+        }
+        return location_data.get("city").lower()
+    except Exception:
+        return None
 
-
-city_from_api = get_location()
 
 # Formats the location data to the values recognized by the Nordpool API.
 def format_city(city):
@@ -24,3 +24,5 @@ def format_city(city):
               "molde": "molde"}
     return cities.get(city)
 
+
+location = get_location(get_ip())

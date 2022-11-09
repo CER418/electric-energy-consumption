@@ -3,12 +3,12 @@ from nordpool import elspot
 import schedule
 import time
 import datetime
-from .location import location
+from location import location
 
 # Attempts to find the current location depending on IP, if not default to Kristiandsand.
 try:
     location = location()
-except Exception or ValueError:
+except None:
     location = "Kr.sand"
 
 # Instance of Prices class for fetching Nord Pool elspot prices.
@@ -44,7 +44,7 @@ class Matrix(SampleBase):
     def __init__(self, *args, **kwargs):
         super(Matrix, self).__init__(*args, **kwargs)
 
-# Fills the LED board with colors depending on if the current price is between two dividers, defined earlier.
+    # Fills the LED board with colors depending on if the current price is between two dividers, defined earlier.
     def run(self):
         while True:
             if num is None:
